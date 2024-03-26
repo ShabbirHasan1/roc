@@ -1779,33 +1779,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "peg"
-version = "0.8.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "400bcab7d219c38abf8bd7cc2054eb9bbbd4312d66f6a5557d572a203f646f61"
-dependencies = [
- "peg-macros",
- "peg-runtime",
-]
-
-[[package]]
-name = "peg-macros"
-version = "0.8.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "46e61cce859b76d19090f62da50a9fe92bab7c2a5f09e183763559a2ac392c90"
-dependencies = [
- "peg-runtime",
- "proc-macro2",
- "quote",
-]
-
-[[package]]
-name = "peg-runtime"
-version = "0.8.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "36bae92c60fa2398ce4678b98b2c4b5a7c61099961ca1fa305aec04a9ad28922"
-
-[[package]]
 name = "percent-encoding"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2422,7 +2395,7 @@ dependencies = [
  "roc_can",
  "roc_collections",
  "roc_command_utils",
- "roc_docs",
+ "roc_docs_io",
  "roc_error_macros",
  "roc_fmt",
  "roc_gen_dev",
@@ -2516,16 +2489,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "roc_docs"
+name = "roc_docs_cli"
+version = "0.0.1"
+dependencies = [
+ "clap 4.4.6",
+ "libc",
+ "roc_docs_io",
+]
+
+[[package]]
+name = "roc_docs_io"
 version = "0.0.1"
 dependencies = [
  "bumpalo",
  "const_format",
- "peg",
  "pretty_assertions",
- "pulldown-cmark",
  "roc_builtins",
- "roc_can",
  "roc_collections",
  "roc_highlight",
  "roc_load",
@@ -2537,16 +2516,17 @@ dependencies = [
  "roc_solve",
  "roc_target",
  "roc_types",
- "snafu",
 ]
 
 [[package]]
-name = "roc_docs_cli"
+name = "roc_docs_render"
 version = "0.0.1"
 dependencies = [
- "clap 4.4.6",
- "libc",
- "roc_docs",
+ "bumpalo",
+ "const_format",
+ "pretty_assertions",
+ "pulldown-cmark",
+ "roc_types",
 ]
 
 [[package]]

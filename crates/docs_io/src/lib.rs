@@ -1,6 +1,3 @@
-//! Generates html documentation from Roc files. Used for things like
-//! [roc-lang.org/builtins/Num](https://www.roc-lang.org/builtins/Num).
-extern crate pulldown_cmark;
 extern crate roc_load;
 use bumpalo::Bump;
 use roc_can::scope::Scope;
@@ -18,14 +15,9 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 mod file;
-mod html;
 mod problem;
-mod render;
 
 pub use problem::Problem;
-pub use render::generate;
-
-const LINK_SVG: &str = include_str!("./static/link.svg");
 
 pub fn generate_docs_html(root_file: PathBuf, build_dir: &Path) {
     let loaded_module = load_module_for_docs(root_file);
@@ -1111,4 +1103,17 @@ fn markdown_to_html(
     }
 
     pulldown_cmark::html::push_html(buf, docs_parser.into_iter());
+}
+
+fn name_from_ident_id(&self, ident_id: IdentId, ident_ids: &'a IdentIds) -> &'a str {
+    ident_ids.get_name(ident_id).unwrap_or_else(|| {
+            if cfg!(debug_assertions) {
+                unreachable!("docs generation tried to render a relative URL for IdentId {:?} but it was not found in home_identids, which should never happen!", ident_id);
+            }
+
+            // In release builds, don't panic, just gracefully continue
+            // by not writing the url. It'll be a bug, but at least
+            // it won't block the user from seeing *some* docs rendered.
+            ""
+        })
 }
